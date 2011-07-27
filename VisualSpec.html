@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Jasmine Spec Runner</title>
+
+  <link rel="shortcut icon" type="image/png" href="lib/jasmine-1.1.0/jasmine_favicon.png">
+
+  <script type="text/javascript" src="lib/underscore-min.js"></script>
+  <script type="text/javascript" src="lib/backbone-min.js"></script>
+  <script type="text/javascript" src="lib/jquery-1.6.2.min.js"></script>
+
+  <!-- include source files here... -->
+  <script type="text/javascript" src="output/spread_sheet.js"></script>
+
+
+</head>
+
+<body>
+
+    <div id="table">
+    </div>
+
+    <script type="text/javascript">
+        $(function(){
+            cellModel = new CellModel({value:4343242});
+            cellView = new CellView(cellModel);
+            $("#table").append(cellView.render());
+        });
+    </script>
+</body>
+</html>

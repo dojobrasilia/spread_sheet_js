@@ -1,6 +1,6 @@
 (function() {
   describe("spread sheet cell view", function() {
-    it("renders a div with content", function() {
+    it("render a div with content", function() {
       var cellView, model;
       model = new CellModel({
         value: 3
