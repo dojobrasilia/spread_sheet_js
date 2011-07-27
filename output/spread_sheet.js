@@ -16,9 +16,11 @@
   })();
   window.CellView = (function() {
     __extends(CellView, Backbone.View);
-    function CellView(model) {}
+    function CellView(model) {
+      this.value = model.get('value');
+    }
     CellView.prototype.render = function() {
-      return this.el = $('<div>3</div>');
+      return this.el = $("<div>" + this.value + "</div>");
     };
     return CellView;
   })();

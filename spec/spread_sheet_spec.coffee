@@ -6,6 +6,13 @@ describe "spread sheet cell view", ->
         cellView.render()
         expect(cellView.el).toBe('div')
         expect(cellView.el).toHaveText('3')
+    
+    it "renders a div with a different content", ->
+        model = new CellModel({value:5})
+        cellView = new CellView(model)
+        cellView.render()
+        expect(cellView.el).toBe('div')
+        expect(cellView.el).toHaveText('5')     
         
 
 

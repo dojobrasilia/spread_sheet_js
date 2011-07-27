@@ -3,7 +3,8 @@ class window.CellModel extends Backbone.Model
 
 class window.CellView extends Backbone.View
     constructor: (model) ->
-        
+        @value = model.get('value')
+           
     render: ->
-        @el=$('<div>3</div>')
+        @el=$("<div>#{ @value }</div>")
         
