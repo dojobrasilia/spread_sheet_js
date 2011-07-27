@@ -6,5 +6,5 @@ class window.CellView extends Backbone.View
         @value = model.get('value')
            
     render: ->
-        @el=$("<div>#{ @value }</div>")
+        @el=$("<div>#{@value}</div>")
         
