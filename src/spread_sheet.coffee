@@ -7,7 +7,7 @@ class window.CellView extends Backbone.View
         'click' : 'edit'
 
     initialize: ->
-        @model.bind('change', @render, @)
+        @model.bind('change', @render)
         
            
     render: =>
@@ -16,3 +16,4 @@ class window.CellView extends Backbone.View
     
     edit: =>
         $(@el).html($("<input type='text'/>"))
+        

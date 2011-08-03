@@ -25,7 +25,7 @@
       'click': 'edit'
     };
     CellView.prototype.initialize = function() {
-      return this.model.bind('change', this.render, this);
+      return this.model.bind('change', this.render);
     };
     CellView.prototype.render = function() {
       $(this.el).text(this.model.get('value'));
