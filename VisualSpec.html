@@ -6,9 +6,10 @@
 
   <link rel="shortcut icon" type="image/png" href="lib/jasmine-1.1.0/jasmine_favicon.png">
 
+  <script type="text/javascript" src="lib/jquery-1.6.2.min.js"></script>
   <script type="text/javascript" src="lib/underscore-min.js"></script>
   <script type="text/javascript" src="lib/backbone-min.js"></script>
-  <script type="text/javascript" src="lib/jquery-1.6.2.min.js"></script>
+
 
   <!-- include source files here... -->
   <script type="text/javascript" src="output/spread_sheet.js"></script>
@@ -24,7 +25,7 @@
     <script type="text/javascript">
         $(function(){
             cellModel = new CellModel({value:434});
-            cellView = new CellView(cellModel);
+            cellView = new CellView({model: cellModel});
             $("#table").append(cellView.render().el);
         });
     </script>

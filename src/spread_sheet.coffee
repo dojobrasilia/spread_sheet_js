@@ -3,16 +3,16 @@ class window.CellModel extends Backbone.Model
 
 class window.CellView extends Backbone.View
 
-    constructor: (model) ->
-        @model = model
+    events:
+        'click' : 'edit'
+
+    initialize: ->
         @model.bind('change', @render, @)
-        $('div').live('click', @edit)
         
            
     render: =>
-        @el=$("<div>#{@model.get('value')}</div>")
+        $(@el).text(@model.get('value'))
         @
     
     edit: =>
-        console.log('chamou')
-        @el=$("<div><input type='text'/></div>")
+        $(@el).html($("<input type='text'/>"))

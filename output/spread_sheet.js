@@ -16,19 +16,23 @@
   })();
   window.CellView = (function() {
     __extends(CellView, Backbone.View);
-    function CellView(model) {
+    function CellView() {
       this.edit = __bind(this.edit, this);
-      this.render = __bind(this.render, this);      this.model = model;
-      this.model.bind('change', this.render, this);
-      $('div').live('click', this.edit);
+      this.render = __bind(this.render, this);
+      CellView.__super__.constructor.apply(this, arguments);
     }
+    CellView.prototype.events = {
+      'click': 'edit'
+    };
+    CellView.prototype.initialize = function() {
+      return this.model.bind('change', this.render, this);
+    };
     CellView.prototype.render = function() {
-      this.el = $("<div>" + (this.model.get('value')) + "</div>");
+      $(this.el).text(this.model.get('value'));
       return this;
     };
     CellView.prototype.edit = function() {
-      console.log('chamou');
-      return this.el = $("<div><input type='text'/></div>");
+      return $(this.el).html($("<input type='text'/>"));
     };
     return CellView;
   })();
