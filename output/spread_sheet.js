@@ -6,7 +6,7 @@
     child.prototype = new ctor;
     child.__super__ = parent.prototype;
     return child;
-  };
+  }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   window.CellModel = (function() {
     __extends(CellModel, Backbone.Model);
     function CellModel() {
@@ -17,10 +17,12 @@
   window.CellView = (function() {
     __extends(CellView, Backbone.View);
     function CellView(model) {
-      this.value = model.get('value');
+      this.render = __bind(this.render, this);      this.model = model;
+      this.model.bind('change', this.render, this);
     }
     CellView.prototype.render = function() {
-      return this.el = $("<div>" + this.value + "</div>");
+      this.el = $("<div>" + (this.model.get('value')) + "</div>");
+      return this;
     };
     return CellView;
   })();

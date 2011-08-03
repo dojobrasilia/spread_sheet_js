@@ -23,9 +23,9 @@
 
     <script type="text/javascript">
         $(function(){
-            cellModel = new CellModel({value:4343242});
+            cellModel = new CellModel({value:434});
             cellView = new CellView(cellModel);
-            $("#table").append(cellView.render());
+            $("#table").append(cellView.render().el);
         });
     </script>
 </body>
