@@ -20,7 +20,7 @@
       expect(cellView.el).toBe('div');
       return expect(cellView.el).toHaveText('5');
     });
-    return it("updates when model changes", function() {
+    it("updates when model changes", function() {
       var cellView, model;
       model = new CellModel({
         value: 5
@@ -31,6 +31,16 @@
         value: 3
       });
       return expect(cellView.el).toHaveText('3');
+    });
+    return it('changes into a textfield when is clicked', function() {
+      var cellView, model;
+      model = new CellModel({
+        value: 5
+      });
+      cellView = new CellView(model);
+      cellView.render();
+      cellView.el.click();
+      return (expect(cellView.el)).toContain('input[type=text]');
     });
   });
 }).call(this);

@@ -1,5 +1,6 @@
 
 describe "CellView", ->
+
     it "render a div with content", ->
         model = new CellModel({value:3})
         cellView = new CellView(model)
@@ -20,4 +21,12 @@ describe "CellView", ->
         cellView.render()
         model.set value: 3
         expect(cellView.el).toHaveText('3')
+    
+    it 'changes into a textfield when is clicked', ->
+        model = new CellModel({value:5})
+        cellView = new CellView(model)
+        cellView.render()
+        cellView.el.click()
+        (expect cellView.el).toContain('input[type=text]')
+                
     

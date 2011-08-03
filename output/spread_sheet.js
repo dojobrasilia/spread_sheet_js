@@ -17,12 +17,18 @@
   window.CellView = (function() {
     __extends(CellView, Backbone.View);
     function CellView(model) {
+      this.edit = __bind(this.edit, this);
       this.render = __bind(this.render, this);      this.model = model;
       this.model.bind('change', this.render, this);
+      $('div').live('click', this.edit);
     }
     CellView.prototype.render = function() {
       this.el = $("<div>" + (this.model.get('value')) + "</div>");
       return this;
+    };
+    CellView.prototype.edit = function() {
+      console.log('chamou');
+      return this.el = $("<div><input type='text'/></div>");
     };
     return CellView;
   })();
