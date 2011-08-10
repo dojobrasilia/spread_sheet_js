@@ -32,7 +32,7 @@
       return this;
     };
     CellView.prototype.edit = function() {
-      return $(this.el).html($("<input type='text'/>"));
+      return $(this.el).html($("<input type='text' value=" + (this.model.get('value')) + ">"));
     };
     return CellView;
   })();

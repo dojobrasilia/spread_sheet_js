@@ -15,5 +15,5 @@ class window.CellView extends Backbone.View
         @
     
     edit: =>
-        $(@el).html($("<input type='text'/>"))
+        $(@el).html($("<input type='text' value=#{@model.get('value')}>"))
         
