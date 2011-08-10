@@ -35,9 +35,15 @@
       $(this.cellView.el).click();
       return expect($(this.cellView.el)).toContain('input[type=text]');
     });
-    return it("keeps text inside text field", function() {
+    it("keeps text inside text field", function() {
       $(this.cellView.el).click();
-      return expect($(this.cellView.el).find('input[type=text]').val()).toBe('3');
+      return expect(this.cellView.$('input[type=text]')).toHaveValue('3');
+    });
+    return it("changes input to div when blured", function() {
+      $(this.cellView.el).click();
+      $(this.cellView.el).find('input[type=text]').blur();
+      expect($(this.cellView.el)).not.toContain('input[type=text]');
+      return expect($(this.cellView.el)).toHaveText('3');
     });
   });
 }).call(this);

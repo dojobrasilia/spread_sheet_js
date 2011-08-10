@@ -27,7 +27,13 @@ describe "@cellView", ->
         
     it "keeps text inside text field", ->
         $(@cellView.el).click()
-        expect($(@cellView.el).find('input[type=text]').val()).toBe('3')
+        expect(@cellView.$('input[type=text]')).toHaveValue('3')
+        
+    it "changes input to div when blured", ->
+        $(@cellView.el).click()
+        $(@cellView.el).find('input[type=text]').blur()
+        expect($(@cellView.el)).not.toContain('input[type=text]')
+        expect($(@cellView.el)).toHaveText('3')
     
                 
     

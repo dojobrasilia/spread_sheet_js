@@ -17,12 +17,14 @@
   window.CellView = (function() {
     __extends(CellView, Backbone.View);
     function CellView() {
+      this.blur = __bind(this.blur, this);
       this.edit = __bind(this.edit, this);
       this.render = __bind(this.render, this);
       CellView.__super__.constructor.apply(this, arguments);
     }
     CellView.prototype.events = {
-      'click': 'edit'
+      'click': 'edit',
+      'blur input': 'blur'
     };
     CellView.prototype.initialize = function() {
       return this.model.bind('change', this.render);
@@ -33,6 +35,9 @@
     };
     CellView.prototype.edit = function() {
       return $(this.el).html($("<input type='text' value=" + (this.model.get('value')) + ">"));
+    };
+    CellView.prototype.blur = function() {
+      return $(this.el).text(this.model.get('value'));
     };
     return CellView;
   })();

@@ -5,6 +5,7 @@ class window.CellView extends Backbone.View
 
     events:
         'click' : 'edit'
+        'blur input' : 'blur'
 
     initialize: ->
         @model.bind('change', @render)
@@ -17,3 +18,5 @@ class window.CellView extends Backbone.View
     edit: =>
         $(@el).html($("<input type='text' value=#{@model.get('value')}>"))
         
+    blur: =>
+        $(@el).text(@model.get('value'))
