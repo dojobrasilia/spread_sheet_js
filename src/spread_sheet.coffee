@@ -21,7 +21,6 @@ class window.CellView extends Backbone.View
         input = $("<input type='text' value=#{@model.get('value')}>")
         $(@el).html(input)
         input.focus()
-        input.focus()
         
     blur: =>
         $(@el).html("<span> #{@model.get('value')} </span>")

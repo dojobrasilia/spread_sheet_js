@@ -38,7 +38,6 @@
       var input;
       input = $("<input type='text' value=" + (this.model.get('value')) + ">");
       $(this.el).html(input);
-      input.focus();
       return input.focus();
     };
     CellView.prototype.blur = function() {
