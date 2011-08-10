@@ -22,22 +22,27 @@
       this.render = __bind(this.render, this);
       CellView.__super__.constructor.apply(this, arguments);
     }
+    CellView.prototype.className = 'cell';
     CellView.prototype.events = {
-      'click': 'edit',
+      'click span': 'edit',
       'blur input': 'blur'
     };
     CellView.prototype.initialize = function() {
       return this.model.bind('change', this.render);
     };
     CellView.prototype.render = function() {
-      $(this.el).text(this.model.get('value'));
+      $(this.el).html("<span>" + (this.model.get('value')) + "</span>");
       return this;
     };
     CellView.prototype.edit = function() {
-      return $(this.el).html($("<input type='text' value=" + (this.model.get('value')) + ">"));
+      var input;
+      input = $("<input type='text' value=" + (this.model.get('value')) + ">");
+      $(this.el).html(input);
+      input.focus();
+      return input.focus();
     };
     CellView.prototype.blur = function() {
-      return $(this.el).text(this.model.get('value'));
+      return $(this.el).html("<span> " + (this.model.get('value')) + " </span>");
     };
     return CellView;
   })();

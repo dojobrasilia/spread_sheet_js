@@ -3,8 +3,10 @@ class window.CellModel extends Backbone.Model
 
 class window.CellView extends Backbone.View
 
+    className: 'cell'
+
     events:
-        'click' : 'edit'
+        'click span' : 'edit'
         'blur input' : 'blur'
 
     initialize: ->
@@ -12,11 +14,14 @@ class window.CellView extends Backbone.View
         
            
     render: =>
-        $(@el).text(@model.get('value'))
+        $(@el).html("<span>#{@model.get('value')}</span>")
         @
     
     edit: =>
-        $(@el).html($("<input type='text' value=#{@model.get('value')}>"))
+        input = $("<input type='text' value=#{@model.get('value')}>")
+        $(@el).html(input)
+        input.focus()
+        input.focus()
         
     blur: =>
-        $(@el).text(@model.get('value'))
+        $(@el).html("<span> #{@model.get('value')} </span>")

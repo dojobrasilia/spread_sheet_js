@@ -22,11 +22,18 @@ describe "@cellView", ->
         expect($(@cellView.el)).toHaveText('5')
     
     it 'changes into a textfield when is clicked', ->
-        $(@cellView.el).click()
+        $(@cellView.el).find("span").click()
         expect($(@cellView.el)).toContain('input[type=text]')
         
+    it "when changes into a textfield it must be focused", ->
+        focus= false
+        @cellView.$('input').live 'focus', => focus= true
+        $(@cellView.el).find("span").click()
+        expect(focus).toBe true
+        
+        
     it "keeps text inside text field", ->
-        $(@cellView.el).click()
+        $(@cellView.el).find("span").click()
         expect(@cellView.$('input[type=text]')).toHaveValue('3')
         
     it "changes input to div when blured", ->
@@ -34,6 +41,7 @@ describe "@cellView", ->
         $(@cellView.el).find('input[type=text]').blur()
         expect($(@cellView.el)).not.toContain('input[type=text]')
         expect($(@cellView.el)).toHaveText('3')
+    
     
                 
     

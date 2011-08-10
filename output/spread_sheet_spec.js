@@ -1,4 +1,5 @@
 (function() {
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   describe("@cellView", function() {
     beforeEach(function() {
       this.cell = new CellModel({
@@ -32,11 +33,20 @@
       return expect($(this.cellView.el)).toHaveText('5');
     });
     it('changes into a textfield when is clicked', function() {
-      $(this.cellView.el).click();
+      $(this.cellView.el).find("span").click();
       return expect($(this.cellView.el)).toContain('input[type=text]');
     });
+    it("when changes into a textfield it must be focused", function() {
+      var focus;
+      focus = false;
+      this.cellView.$('input').live('focus', __bind(function() {
+        return focus = true;
+      }, this));
+      $(this.cellView.el).find("span").click();
+      return expect(focus).toBe(true);
+    });
     it("keeps text inside text field", function() {
-      $(this.cellView.el).click();
+      $(this.cellView.el).find("span").click();
       return expect(this.cellView.$('input[type=text]')).toHaveValue('3');
     });
     return it("changes input to div when blured", function() {
