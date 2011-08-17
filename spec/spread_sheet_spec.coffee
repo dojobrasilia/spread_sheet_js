@@ -15,6 +15,12 @@ describe "CellModel", ->
         sum = new CellSubModel(cell1:m1, cell2:m2)
         expect(sum.get('value')).toBe(-1)
         
+    it "divides two cells", ->
+        m1 = new CellModel(value:10)
+        m2 = new CellModel(value:2)
+        sum = new CellDivModel(cell1:m1, cell2:m2)
+        expect(sum.get('value')).toBe(5)
+        
 describe "CellView", ->
 
 	beforeEach ->

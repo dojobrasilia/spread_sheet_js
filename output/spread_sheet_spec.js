@@ -20,7 +20,7 @@
       });
       return expect(sum.get('value')).toBe(5);
     });
-    return it("subtracts two cells", function() {
+    it("subtracts two cells", function() {
       var m1, m2, sum;
       m1 = new CellModel({
         value: 2
@@ -33,6 +33,20 @@
         cell2: m2
       });
       return expect(sum.get('value')).toBe(-1);
+    });
+    return it("divides two cells", function() {
+      var m1, m2, sum;
+      m1 = new CellModel({
+        value: 10
+      });
+      m2 = new CellModel({
+        value: 2
+      });
+      sum = new CellDivModel({
+        cell1: m1,
+        cell2: m2
+      });
+      return expect(sum.get('value')).toBe(5);
     });
   });
   describe("CellView", function() {

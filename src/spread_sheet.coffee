@@ -10,6 +10,10 @@ class window.CellSubModel extends window.CellModel
     initialize: =>
         @set(value:@get('cell1').get('value') - @get('cell2').get('value'))
 
+class window.CellDivModel extends window.CellModel
+    initialize: =>
+        @set(value:@get('cell1').get('value') / @get('cell2').get('value'))
+
 class window.CellView extends Backbone.View
     className: 'cellview'
     mode: 'view'
