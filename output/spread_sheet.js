@@ -23,6 +23,7 @@
       CellView.__super__.constructor.apply(this, arguments);
     }
     CellView.prototype.className = 'cell';
+    CellView.prototype.mode = 'view';
     CellView.prototype.events = {
       'click span': 'edit',
       'blur input': 'blur'
@@ -31,17 +32,23 @@
       return this.model.bind('change', this.render);
     };
     CellView.prototype.render = function() {
-      $(this.el).html("<span>" + (this.model.get('value')) + "</span>");
+      var input;
+      if (this.mode === 'view') {
+        $(this.el).html("<span>" + (this.model.get('value')) + "</span>");
+      } else {
+        input = $("<input type='text' value=" + (this.model.get('value')) + ">");
+        $(this.el).html(input);
+        input.focus();
+      }
       return this;
     };
     CellView.prototype.edit = function() {
-      var input;
-      input = $("<input type='text' value=" + (this.model.get('value')) + ">");
-      $(this.el).html(input);
-      return input.focus();
+      this.mode = 'edit';
+      return this.render();
     };
     CellView.prototype.blur = function() {
-      return $(this.el).html("<span> " + (this.model.get('value')) + " </span>");
+      this.mode = 'view';
+      return this.render();
     };
     return CellView;
   })();
