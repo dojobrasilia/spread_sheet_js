@@ -1,5 +1,9 @@
-
-describe "@cellView", ->
+describe "CellModel", ->
+    it "has default value", ->
+        m= new CellModel
+        expect(m.get('value')).toBe ''
+        
+describe "CellView", ->
 
 	beforeEach ->
         @cell = new CellModel({value:3})
@@ -56,5 +60,4 @@ describe "SSView", ->
         expect($(v.el).find('table tr').size()).toBe(1)
         expect($(v.el).find('table tr:first td').size()).toBe(2)
         expect($(v.el).find('table tr:first td:first')).toContain('.cellview')
-
-        
+         

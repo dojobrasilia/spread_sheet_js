@@ -1,6 +1,13 @@
 (function() {
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-  describe("@cellView", function() {
+  describe("CellModel", function() {
+    return it("has default value", function() {
+      var m;
+      m = new CellModel;
+      return expect(m.get('value')).toBe('');
+    });
+  });
+  describe("CellView", function() {
     beforeEach(function() {
       this.cell = new CellModel({
         value: 3

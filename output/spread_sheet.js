@@ -12,6 +12,9 @@
     function CellModel() {
       CellModel.__super__.constructor.apply(this, arguments);
     }
+    CellModel.prototype.defaults = {
+      value: ''
+    };
     return CellModel;
   })();
   window.CellView = (function() {
@@ -67,7 +70,7 @@
       return this.cols = cols;
     };
     SSView.prototype.render = function() {
-      var cellView, col, i, j, row, table, _ref, _ref2;
+      var cellView, i, j, row, table, _ref, _ref2;
       table = $("<table/>");
       for (i = 1, _ref = this.rows; 1 <= _ref ? i <= _ref : i >= _ref; 1 <= _ref ? i++ : i--) {
         row = $("<tr/>");
@@ -77,12 +80,11 @@
             model: new CellModel
           });
           cellView.render();
-          col = $("<td/>");
-          col.append(cellView.el);
-          row.append(col);
+          row.append($("<td/>").append(cellView.el));
         }
       }
-      return $(this.el).html(table);
+      $(this.el).html(table);
+      return this;
     };
     return SSView;
   })();

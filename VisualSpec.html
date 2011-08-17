@@ -13,20 +13,46 @@
 
   <!-- include source files here... -->
   <script type="text/javascript" src="output/spread_sheet.js"></script>
-
+  <style>
+    table {
+      border-collapse: collapse;
+      font-family: Helvetica;
+      font-size: 12px;
+      margin: auto;
+    }
+    
+    table td {
+      border: 1px solid gray;
+    }
+    
+    .cellview span, .cellview input {
+       width: 50px;
+       height: 20px;
+       display: block;
+       line-height: 20px;
+     }
+     
+     input {
+       border: 0;
+       padding: 0; 
+       margin: 0;
+       font-family: Helvetica;
+       font-size: 12px;
+     }
+     
+     input:focus {
+       background: #eee;
+     }
+  </style>
 
 </head>
 
 <body>
 
-    <div id="table">
-    </div>
-
     <script type="text/javascript">
         $(function(){
-            cellModel = new CellModel({value:434});
-            cellView = new CellView({model: cellModel});
-            $("#table").append(cellView.render().el);
+            var ssv= new SSView(5,5)
+            $('body').append(ssv.render().el)
         });
     </script>
 </body>

@@ -1,5 +1,6 @@
 class window.CellModel extends Backbone.Model
-
+    defaults:
+        value: ''
 
 class window.CellView extends Backbone.View
     className: 'cellview'
@@ -43,11 +44,9 @@ class window.SSView extends Backbone.View
             for j in [1..@cols]
                 cellView = new CellView(model : new CellModel)
                 cellView.render()
-                col = $("<td/>")
-                col.append(cellView.el)
-                row.append(col)
+                row.append $("<td/>").append(cellView.el)
         $(@el).html(table)
-        
+        @
         
         
         
