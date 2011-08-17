@@ -17,6 +17,19 @@
     };
     return CellModel;
   })();
+  window.CellSumModel = (function() {
+    __extends(CellSumModel, window.CellModel);
+    function CellSumModel() {
+      this.initialize = __bind(this.initialize, this);
+      CellSumModel.__super__.constructor.apply(this, arguments);
+    }
+    CellSumModel.prototype.initialize = function() {
+      return this.set({
+        value: this.get('cell1').get('value') + this.get('cell2').get('value')
+      });
+    };
+    return CellSumModel;
+  })();
   window.CellView = (function() {
     __extends(CellView, Backbone.View);
     function CellView() {

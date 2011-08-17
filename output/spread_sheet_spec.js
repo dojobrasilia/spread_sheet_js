@@ -1,10 +1,24 @@
 (function() {
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   describe("CellModel", function() {
-    return it("has default value", function() {
+    it("has default value", function() {
       var m;
       m = new CellModel;
       return expect(m.get('value')).toBe('');
+    });
+    return it("sums two cells", function() {
+      var m1, m2, sum;
+      m1 = new CellModel({
+        value: 2
+      });
+      m2 = new CellModel({
+        value: 3
+      });
+      sum = new CellSumModel({
+        cell1: m1,
+        cell2: m2
+      });
+      return expect(sum.get('value')).toBe(5);
     });
   });
   describe("CellView", function() {

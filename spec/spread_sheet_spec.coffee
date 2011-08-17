@@ -3,6 +3,12 @@ describe "CellModel", ->
         m= new CellModel
         expect(m.get('value')).toBe ''
         
+    it "sums two cells", ->
+        m1 = new CellModel(value:2)
+        m2 = new CellModel(value:3)
+        sum = new CellSumModel(cell1:m1, cell2:m2)
+        expect(sum.get('value')).toBe(5)
+        
 describe "CellView", ->
 
 	beforeEach ->
@@ -60,4 +66,4 @@ describe "SSView", ->
         expect($(v.el).find('table tr').size()).toBe(1)
         expect($(v.el).find('table tr:first td').size()).toBe(2)
         expect($(v.el).find('table tr:first td:first')).toContain('.cellview')
-         
+    
