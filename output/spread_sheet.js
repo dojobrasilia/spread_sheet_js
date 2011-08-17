@@ -47,6 +47,9 @@
       return this.render();
     };
     CellView.prototype.blur = function() {
+      this.model.set({
+        value: $(this.el).find('input').val()
+      });
       this.mode = 'view';
       return this.render();
     };

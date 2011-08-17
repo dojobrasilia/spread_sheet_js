@@ -31,17 +31,19 @@ describe "@cellView", ->
         $(@cellView.el).find("span").click()
         expect(focus).toBe true
         
-        
     it "keeps text inside text field", ->
         $(@cellView.el).find("span").click()
         expect(@cellView.$('input[type=text]')).toHaveValue('3')
         
     it "changes input to div when blured", ->
-        $(@cellView.el).click()
+        $(@cellView.el).find("span").click()
         $(@cellView.el).find('input[type=text]').blur()
         expect($(@cellView.el)).not.toContain('input[type=text]')
         expect($(@cellView.el)).toHaveText('3')
     
-    
-                
+    it "saves edited value", ->
+        $(@cellView.el).find("span").click()
+        $(@cellView.el).find('input').val('9').blur()
+        expect(@cellView.model.get('value')).toBe('9')
+        expect($(@cellView.el)).toHaveText('9')  
     

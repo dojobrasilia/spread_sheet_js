@@ -25,5 +25,6 @@ class window.CellView extends Backbone.View
         @render()
         
     blur: =>
+        @model.set( value: $(@el).find('input').val() )
         @mode= 'view'
         @render()
