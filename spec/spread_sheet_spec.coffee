@@ -9,6 +9,12 @@ describe "CellModel", ->
         sum = new CellSumModel(cell1:m1, cell2:m2)
         expect(sum.get('value')).toBe(5)
         
+    it "subtracts two cells", ->
+        m1 = new CellModel(value:2)
+        m2 = new CellModel(value:3)
+        sum = new CellSubModel(cell1:m1, cell2:m2)
+        expect(sum.get('value')).toBe(-1)
+        
 describe "CellView", ->
 
 	beforeEach ->

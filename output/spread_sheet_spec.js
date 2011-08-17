@@ -6,7 +6,7 @@
       m = new CellModel;
       return expect(m.get('value')).toBe('');
     });
-    return it("sums two cells", function() {
+    it("sums two cells", function() {
       var m1, m2, sum;
       m1 = new CellModel({
         value: 2
@@ -19,6 +19,20 @@
         cell2: m2
       });
       return expect(sum.get('value')).toBe(5);
+    });
+    return it("subtracts two cells", function() {
+      var m1, m2, sum;
+      m1 = new CellModel({
+        value: 2
+      });
+      m2 = new CellModel({
+        value: 3
+      });
+      sum = new CellSubModel({
+        cell1: m1,
+        cell2: m2
+      });
+      return expect(sum.get('value')).toBe(-1);
     });
   });
   describe("CellView", function() {

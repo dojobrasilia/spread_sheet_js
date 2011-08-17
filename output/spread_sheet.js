@@ -30,6 +30,19 @@
     };
     return CellSumModel;
   })();
+  window.CellSubModel = (function() {
+    __extends(CellSubModel, window.CellModel);
+    function CellSubModel() {
+      this.initialize = __bind(this.initialize, this);
+      CellSubModel.__super__.constructor.apply(this, arguments);
+    }
+    CellSubModel.prototype.initialize = function() {
+      return this.set({
+        value: this.get('cell1').get('value') - this.get('cell2').get('value')
+      });
+    };
+    return CellSubModel;
+  })();
   window.CellView = (function() {
     __extends(CellView, Backbone.View);
     function CellView() {
