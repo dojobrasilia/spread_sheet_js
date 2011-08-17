@@ -62,4 +62,16 @@
       return expect($(this.cellView.el)).toHaveText('9');
     });
   });
+  describe("SSView", function() {
+    return it("renders a table with many cell views", function() {
+      var v;
+      v = new SSView(1, 2);
+      v.render();
+      expect($(v.el)).toContain('table');
+      expect($(v.el).find('table tr').size()).toBe(1);
+      expect($(v.el).find('table tr:first td').size()).toBe(2);
+      $(v.el).find('table tr:first td:first span').click();
+      return expect($(v.el).find('table tr:first td:first')).toContain('input');
+    });
+  });
 }).call(this);

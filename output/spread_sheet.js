@@ -55,4 +55,35 @@
     };
     return CellView;
   })();
+  window.SSView = (function() {
+    __extends(SSView, Backbone.View);
+    function SSView() {
+      this.render = __bind(this.render, this);
+      this.initialize = __bind(this.initialize, this);
+      SSView.__super__.constructor.apply(this, arguments);
+    }
+    SSView.prototype.initialize = function(rows, cols) {
+      this.rows = rows;
+      return this.cols = cols;
+    };
+    SSView.prototype.render = function() {
+      var cellView, col, i, j, row, table, _ref, _ref2;
+      table = $("<table/>");
+      for (i = 1, _ref = this.rows; 1 <= _ref ? i <= _ref : i >= _ref; 1 <= _ref ? i++ : i--) {
+        row = $("<tr/>");
+        table.append(row);
+        for (j = 1, _ref2 = this.cols; 1 <= _ref2 ? j <= _ref2 : j >= _ref2; 1 <= _ref2 ? j++ : j--) {
+          cellView = new CellView({
+            model: new CellModel
+          });
+          cellView.render();
+          col = $("<td/>");
+          col.append(cellView.el);
+          row.append(col);
+        }
+      }
+      return $(this.el).html(table);
+    };
+    return SSView;
+  })();
 }).call(this);

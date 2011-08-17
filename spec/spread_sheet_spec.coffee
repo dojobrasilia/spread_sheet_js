@@ -46,4 +46,17 @@ describe "@cellView", ->
         $(@cellView.el).find('input').val('9').blur()
         expect(@cellView.model.get('value')).toBe('9')
         expect($(@cellView.el)).toHaveText('9')  
-    
+
+describe "SSView", ->
+
+    it "renders a table with many cell views", ->
+        v = new SSView(1,2)
+        v.render()
+        expect($(v.el)).toContain('table')
+        expect($(v.el).find('table tr').size()).toBe(1)
+        expect($(v.el).find('table tr:first td').size()).toBe(2)
+        
+        $(v.el).find('table tr:first td:first span').click()
+        expect($(v.el).find('table tr:first td:first')).toContain('input')
+
+        
