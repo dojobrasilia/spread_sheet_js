@@ -22,7 +22,7 @@
       this.render = __bind(this.render, this);
       CellView.__super__.constructor.apply(this, arguments);
     }
-    CellView.prototype.className = 'cell';
+    CellView.prototype.className = 'cellview';
     CellView.prototype.mode = 'view';
     CellView.prototype.events = {
       'click span': 'edit',

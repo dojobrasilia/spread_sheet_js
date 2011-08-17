@@ -2,7 +2,7 @@ class window.CellModel extends Backbone.Model
 
 
 class window.CellView extends Backbone.View
-    className: 'cell'
+    className: 'cellview'
     mode: 'view'
     events:
         'click span' : 'edit'

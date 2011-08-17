@@ -70,8 +70,7 @@
       expect($(v.el)).toContain('table');
       expect($(v.el).find('table tr').size()).toBe(1);
       expect($(v.el).find('table tr:first td').size()).toBe(2);
-      $(v.el).find('table tr:first td:first span').click();
-      return expect($(v.el).find('table tr:first td:first')).toContain('input');
+      return expect($(v.el).find('table tr:first td:first')).toContain('.cellview');
     });
   });
 }).call(this);
