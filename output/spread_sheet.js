@@ -56,6 +56,19 @@
     };
     return CellDivModel;
   })();
+  window.CellMultModel = (function() {
+    __extends(CellMultModel, window.CellModel);
+    function CellMultModel() {
+      this.initialize = __bind(this.initialize, this);
+      CellMultModel.__super__.constructor.apply(this, arguments);
+    }
+    CellMultModel.prototype.initialize = function() {
+      return this.set({
+        value: this.get('cell1').get('value') * this.get('cell2').get('value')
+      });
+    };
+    return CellMultModel;
+  })();
   window.CellView = (function() {
     __extends(CellView, Backbone.View);
     function CellView() {

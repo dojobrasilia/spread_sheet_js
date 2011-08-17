@@ -21,6 +21,12 @@ describe "CellModel", ->
         sum = new CellDivModel(cell1:m1, cell2:m2)
         expect(sum.get('value')).toBe(5)
         
+    it "multiplies two cells", ->
+        m1 = new CellModel(value:10)
+        m2 = new CellModel(value:2)
+        sum = new CellMultModel(cell1:m1, cell2:m2)
+        expect(sum.get('value')).toBe(20)
+        
 describe "CellView", ->
 
 	beforeEach ->
