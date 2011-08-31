@@ -2,31 +2,7 @@ describe "CellModel", ->
     it "has default value", ->
         m= new CellModel
         expect(m.get('value')).toBe ''
-        
-    it "sums two cells", ->
-        m1 = new CellModel(value:2)
-        m2 = new CellModel(value:3)
-        sum = new CellSumModel(cell1:m1, cell2:m2)
-        expect(sum.get('value')).toBe(5)
-        
-    it "subtracts two cells", ->
-        m1 = new CellModel(value:2)
-        m2 = new CellModel(value:3)
-        sum = new CellSubModel(cell1:m1, cell2:m2)
-        expect(sum.get('value')).toBe(-1)
-        
-    it "divides two cells", ->
-        m1 = new CellModel(value:10)
-        m2 = new CellModel(value:2)
-        sum = new CellDivModel(cell1:m1, cell2:m2)
-        expect(sum.get('value')).toBe(5)
-        
-    it "multiplies two cells", ->
-        m1 = new CellModel(value:10)
-        m2 = new CellModel(value:2)
-        sum = new CellMultModel(cell1:m1, cell2:m2)
-        expect(sum.get('value')).toBe(20)
-        
+                
     # Paramos aqui     
     # it "multiplies two non-abscells", ->
     #        m1 = new CellModel(value:10)

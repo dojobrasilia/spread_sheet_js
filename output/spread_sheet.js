@@ -17,58 +17,6 @@
     };
     return CellModel;
   })();
-  window.CellSumModel = (function() {
-    __extends(CellSumModel, window.CellModel);
-    function CellSumModel() {
-      this.initialize = __bind(this.initialize, this);
-      CellSumModel.__super__.constructor.apply(this, arguments);
-    }
-    CellSumModel.prototype.initialize = function() {
-      return this.set({
-        value: this.get('cell1').get('value') + this.get('cell2').get('value')
-      });
-    };
-    return CellSumModel;
-  })();
-  window.CellSubModel = (function() {
-    __extends(CellSubModel, window.CellModel);
-    function CellSubModel() {
-      this.initialize = __bind(this.initialize, this);
-      CellSubModel.__super__.constructor.apply(this, arguments);
-    }
-    CellSubModel.prototype.initialize = function() {
-      return this.set({
-        value: this.get('cell1').get('value') - this.get('cell2').get('value')
-      });
-    };
-    return CellSubModel;
-  })();
-  window.CellDivModel = (function() {
-    __extends(CellDivModel, window.CellModel);
-    function CellDivModel() {
-      this.initialize = __bind(this.initialize, this);
-      CellDivModel.__super__.constructor.apply(this, arguments);
-    }
-    CellDivModel.prototype.initialize = function() {
-      return this.set({
-        value: this.get('cell1').get('value') / this.get('cell2').get('value')
-      });
-    };
-    return CellDivModel;
-  })();
-  window.CellMultModel = (function() {
-    __extends(CellMultModel, window.CellModel);
-    function CellMultModel() {
-      this.initialize = __bind(this.initialize, this);
-      CellMultModel.__super__.constructor.apply(this, arguments);
-    }
-    CellMultModel.prototype.initialize = function() {
-      return this.set({
-        value: this.get('cell1').get('value') * this.get('cell2').get('value')
-      });
-    };
-    return CellMultModel;
-  })();
   window.CellView = (function() {
     __extends(CellView, Backbone.View);
     function CellView() {
