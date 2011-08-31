@@ -1,6 +1,19 @@
 class window.CellModel extends Backbone.Model
     defaults:
         value: ''
+        text: ''
+    
+    initialize: ->
+      @bind('change', @changed)
+      @changed()
+    
+    changed: =>
+      if(@get('value')[0]=='=')
+        m= @get('ssview').models[@get('value').substring(1)]
+        m.bind('change:value', @changed)
+        @set(text: m.get('text'))
+      else
+        @set(text:@get('value'))
         
 class window.CellView extends Backbone.View
     className: 'cellview'
@@ -14,7 +27,7 @@ class window.CellView extends Backbone.View
            
     render: =>
         if @mode == 'view'
-          $(@el).html("<span>#{@model.get('value')}</span>")
+          $(@el).html("<span>#{@model.get('text')}</span>")
         else
           input = $("<input type='text' value=#{@model.get('value')}>")
           $(@el).html(input)
@@ -31,20 +44,29 @@ class window.CellView extends Backbone.View
         @render()
 
 class window.SSView extends Backbone.View
-    
+    models: {}
     initialize: (rows, cols)=>
         @rows = rows
         @cols = cols
     
     render: =>
         table = $("<table/>")
-        for i in [1..@rows]
+        letters = ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 
+        'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 
+        'V', 'W', 'X', 'Y', 'Z']
+        for rowIndex in [0..@rows]
             row = $("<tr/>")
             table.append(row)
-            for j in [1..@cols]
-                cellView = new CellView(model : new CellModel)
-                cellView.render()
-                row.append $("<td/>").append(cellView.el)
+            for colIndex in [0..@cols]
+                if rowIndex == 0
+                  row.append $('<th/>').text(letters[colIndex])
+                else if colIndex == 0
+                  row.append $('<th>').text(rowIndex)
+                else
+                  @models["#{letters[colIndex]}#{rowIndex}"]=new CellModel({ssview: @})
+                  cellView = new CellView(model: @models["#{letters[colIndex]}#{rowIndex}"])
+                  cellView.render()
+                  row.append $("<td/>").append(cellView.el)
         $(@el).html(table)
         @
         

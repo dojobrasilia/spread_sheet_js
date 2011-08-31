@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <title>Jasmine Spec Runner</title>
+  <title>Google Docs for what</title>
 
   <link rel="shortcut icon" type="image/png" href="lib/jasmine-1.1.0/jasmine_favicon.png">
 
@@ -21,7 +21,12 @@
       margin: auto;
     }
     
-    table td {
+    th {
+      background: #ccc;
+      padding: 5px 12px;
+    }
+    
+    td, th {
       border: 1px solid gray;
     }
     
@@ -51,7 +56,7 @@
 
     <script type="text/javascript">
         $(function(){
-            var ssv= new SSView(5,5)
+            window.ssv= new SSView(5,5)
             $('body').append(ssv.render().el)
         });
     </script>
