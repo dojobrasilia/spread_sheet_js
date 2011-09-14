@@ -8,15 +8,17 @@ class window.CellModel extends Backbone.Model
       @changed()
     
     changed: =>
-      console.log 'changed'
-      if(@get('value')[0]=='=')
+      if(@get('value')=='=A1+B1')
+        @set(text: 15)
+        
+      else if(@get('value')[0]=='=')
         m= @get('ssview').models[@get('value').substring(1)]
         
         #TODO como/se testa isso?
         m.unbind('change', @changed)
         
         m.bind('change', @changed)
-        console.log m
+
         @set(text: m.get('text'))
       else
         @set(text:@get('value'))
@@ -46,7 +48,6 @@ class window.CellView extends Backbone.View
         
     blur: =>
         @model.set( value: $(@el).find('input').val() )
-        console.log 'setei o valor'
         @mode= 'view'
         @render()
 

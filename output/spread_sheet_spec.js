@@ -1,5 +1,14 @@
 (function() {
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  window.TestHelper = (function() {
+    function TestHelper(v) {
+      this.v = v;
+    }
+    TestHelper.prototype.clickOnCell = function(row, col) {
+      return this.v.$('table tr:eq(' + row + ') td:eq(' + col + ') span').click();
+    };
+    return TestHelper;
+  })();
   describe("CellModel", function() {
     return it("has default value", function() {
       var m;
@@ -69,7 +78,7 @@
       return expect($(this.cellView.el)).toHaveText('9');
     });
   });
-  describe("SSView", function() {
+  describe("SSView", __bind(function() {
     it("renders a table with many cell views", function() {
       var v;
       v = new SSView(1, 2);
@@ -103,7 +112,7 @@
       v.$('table tr:eq(1) td:eq(1) input').val('=A1').blur();
       return expect(v.$('table tr:eq(1) td:eq(1) span')).toHaveText('7');
     });
-    return it("changes when the referenced value changes", function() {
+    it("changes when the referenced value changes", function() {
       var v;
       v = new SSView(3, 3);
       v.render();
@@ -118,5 +127,18 @@
       v.$('table tr:eq(1) td:first input').val('8').blur();
       return expect(v.$('table tr:eq(1) td:eq(1) span')).toHaveText('8');
     });
-  });
+    return it("sums two cells", __bind(function() {
+      var helper, v;
+      v = new SSView(1, 3);
+      v.render();
+      helper = new TestHelper(v);
+      helper.clickOnCell(1, 0);
+      v.$('table tr:eq(1) td:eq(0) input').val('7').blur();
+      v.$('table tr:eq(1) td:eq(1) span').click();
+      v.$('table tr:eq(1) td:eq(1) input').val('8').blur();
+      v.$('table tr:eq(1) td:eq(2) span').click();
+      v.$('table tr:eq(1) td:eq(2) input').val('=A1+B1').blur();
+      return expect(v.$('table tr:eq(1) td:eq(2) span')).toHaveText('15');
+    }, this));
+  }, this));
 }).call(this);

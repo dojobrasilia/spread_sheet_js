@@ -1,8 +1,32 @@
+class window.TestHelper
+  
+  constructor: (@v)->
+
+  clickOnCell: (row,col)->
+    @v.$('table tr:eq('+row+') td:eq('+col+') span').click()
+
 describe "CellModel", ->
     it "has default value", ->
         m= new CellModel
         expect(m.get('value')).toBe ''
     
+    
+    # deve unbind'ar as celulas referenciadas qndo deixa de ser fórmula
+    #it "listens to changes in the referenced cell", ->
+    #  v = new SSView(1,2)
+    #  v.render()
+    #  source = v.models['A1']
+    #  dest = v.models['B1']
+    #  
+    #  dest.set(value:'=A1')
+    #  
+    #  changed = false
+    #  dest.changed = ()=>
+    #    changed = true
+    #    console.log 'oi'
+    #    
+    #  source.set(value:'8')
+    #  expect(changed).toBe true
     
     # Paramos aqui     
     # it "multiplies two non-abscells", ->
@@ -59,53 +83,69 @@ describe "CellView", ->
         expect(@cellView.model.get('value')).toBe('9')
         expect($(@cellView.el)).toHaveText('9')  
 
-describe "SSView", ->
+describe "SSView", =>
 
-    it "renders a table with many cell views", ->
-        v = new SSView(1,2)
-        v.render()
-        expect($(v.el)).toContain('table')
-        expect($(v.el).find('table tr').size()).toBe(2)
-        expect($(v.el).find('table tr:eq(1) td').size()).toBe(2)
-        expect($(v.el).find('table tr:eq(1) td:first')).toContain('.cellview')
-        
-    it "shows coordinates identifiers", ->
-      v = new SSView(3,3)
+  it "renders a table with many cell views", ->
+      v = new SSView(1,2)
       v.render()
-      expect(v.$('tr').size()).toBe(4)
-      expect(v.$('th').size()).toBe(7)
-      expect(v.$('table tr:first th:eq(0)')).toHaveText('')
-      expect(v.$('table tr:first th:eq(1)')).toHaveText('A')
-      expect(v.$('table tr:first th:eq(2)')).toHaveText('B')
-      expect(v.$('table tr:first th:eq(3)')).toHaveText('C')      
+      expect($(v.el)).toContain('table')
+      expect($(v.el).find('table tr').size()).toBe(2)
+      expect($(v.el).find('table tr:eq(1) td').size()).toBe(2)
+      expect($(v.el).find('table tr:eq(1) td:first')).toContain('.cellview')
       
-      expect(v.$('table tr:eq(1) th:first')).toHaveText('1')
-      expect(v.$('table tr:eq(2) th:first')).toHaveText('2')
-      expect(v.$('table tr:eq(3) th:first')).toHaveText('3')
+  it "shows coordinates identifiers", ->
+    v = new SSView(3,3)
+    v.render()
+    expect(v.$('tr').size()).toBe(4)
+    expect(v.$('th').size()).toBe(7)
+    expect(v.$('table tr:first th:eq(0)')).toHaveText('')
+    expect(v.$('table tr:first th:eq(1)')).toHaveText('A')
+    expect(v.$('table tr:first th:eq(2)')).toHaveText('B')
+    expect(v.$('table tr:first th:eq(3)')).toHaveText('C')      
     
-    it "has reference cell", ->
-      v = new SSView(3,3)
-      v.render()
-      v.$('table tr:eq(1) td:first span').click()
-      v.$('table tr:eq(1) td:first input').val('7').blur()
-      v.$('table tr:eq(1) td:eq(1) span').click()
-      v.$('table tr:eq(1) td:eq(1) input').val('=A1').blur()
-      expect(v.$('table tr:eq(1) td:eq(1) span')).toHaveText('7')
-      
-    it "changes when the referenced value changes", ->
-      v = new SSView(3,3)
-      v.render()
-      v.$('table tr:eq(1) td:first span').click()
-      v.$('table tr:eq(1) td:first input').val('7').blur()
-      v.$('table tr:eq(1) td:eq(1) span').click()
-      v.$('table tr:eq(1) td:eq(1) input').val('=A1').blur()
+    expect(v.$('table tr:eq(1) th:first')).toHaveText('1')
+    expect(v.$('table tr:eq(2) th:first')).toHaveText('2')
+    expect(v.$('table tr:eq(3) th:first')).toHaveText('3')
+  
+  it "has reference cell", ->
+    v = new SSView(3,3)
+    v.render()
+    v.$('table tr:eq(1) td:first span').click()
+    v.$('table tr:eq(1) td:first input').val('7').blur()
+    v.$('table tr:eq(1) td:eq(1) span').click()
+    v.$('table tr:eq(1) td:eq(1) input').val('=A1').blur()
+    expect(v.$('table tr:eq(1) td:eq(1) span')).toHaveText('7')
+    
+  it "changes when the referenced value changes", ->
+    v = new SSView(3,3)
+    v.render()
+    v.$('table tr:eq(1) td:first span').click()
+    v.$('table tr:eq(1) td:first input').val('7').blur()
+    v.$('table tr:eq(1) td:eq(1) span').click()
+    v.$('table tr:eq(1) td:eq(1) input').val('=A1').blur()
 
-      v.$('table tr:eq(1) td:eq(1) span').click()
-      expect(v.$('table tr:eq(1) td:eq(1) input')).toHaveValue('=A1')
-      v.$('table tr:eq(1) td:eq(1) input').blur()
-      
-      v.$('table tr:eq(1) td:first span').click()
-      v.$('table tr:eq(1) td:first input').val('8').blur()
-      
-      expect(v.$('table tr:eq(1) td:eq(1) span')).toHaveText('8')
+    v.$('table tr:eq(1) td:eq(1) span').click()
+    expect(v.$('table tr:eq(1) td:eq(1) input')).toHaveValue('=A1')
+    v.$('table tr:eq(1) td:eq(1) input').blur()
+    
+    v.$('table tr:eq(1) td:first span').click()
+    v.$('table tr:eq(1) td:first input').val('8').blur()
+    
+    expect(v.$('table tr:eq(1) td:eq(1) span')).toHaveText('8')
+
+  it "sums two cells", =>
+    v = new SSView(1,3)
+    v.render()
+    
+    helper = new TestHelper(v)
+    helper.clickOnCell(1,0)
+    
+    #v.$('table tr:eq(1) td:eq(0) span').click()
+    v.$('table tr:eq(1) td:eq(0) input').val('7').blur()
+    v.$('table tr:eq(1) td:eq(1) span').click()
+    v.$('table tr:eq(1) td:eq(1) input').val('8').blur()
+    v.$('table tr:eq(1) td:eq(2) span').click()
+    v.$('table tr:eq(1) td:eq(2) input').val('=A1+B1').blur()
+    
+    expect(v.$('table tr:eq(1) td:eq(2) span')).toHaveText('15')
       
