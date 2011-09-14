@@ -23,9 +23,12 @@
     };
     CellModel.prototype.changed = function() {
       var m;
+      console.log('changed');
       if (this.get('value')[0] === '=') {
         m = this.get('ssview').models[this.get('value').substring(1)];
-        m.bind('change:value', this.changed);
+        m.unbind('change', this.changed);
+        m.bind('change', this.changed);
+        console.log(m);
         return this.set({
           text: m.get('text')
         });
@@ -73,6 +76,7 @@
       this.model.set({
         value: $(this.el).find('input').val()
       });
+      console.log('setei o valor');
       this.mode = 'view';
       return this.render();
     };

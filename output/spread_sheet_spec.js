@@ -113,6 +113,8 @@
       v.$('table tr:eq(1) td:eq(1) input').val('=A1').blur();
       v.$('table tr:eq(1) td:eq(1) span').click();
       expect(v.$('table tr:eq(1) td:eq(1) input')).toHaveValue('=A1');
+      v.$('table tr:eq(1) td:eq(1) input').blur();
+      v.$('table tr:eq(1) td:first span').click();
       v.$('table tr:eq(1) td:first input').val('8').blur();
       return expect(v.$('table tr:eq(1) td:eq(1) span')).toHaveText('8');
     });
