@@ -23,10 +23,16 @@
       return this.changed();
     };
     CellModel.prototype.changed = function() {
-      var a, b, m, match;
+      var a, b, m, ma, match, mb;
       if (match = this.get('value').match(this.formula)) {
-        a = parseInt(this.get('ssview').models[match[1].toUpperCase()].get('value'));
-        b = parseInt(this.get('ssview').models[match[3].toUpperCase()].get('value'));
+        ma = this.get('ssview').models[match[1].toUpperCase()];
+        a = parseInt(ma.get('value'));
+        mb = this.get('ssview').models[match[3].toUpperCase()];
+        b = parseInt(mb.get('value'));
+        ma.unbind('change', this.changed);
+        mb.unbind('change', this.changed);
+        ma.bind('change', this.changed);
+        mb.bind('change', this.changed);
         if (match[2] === '+') {
           return this.set({
             text: a + b

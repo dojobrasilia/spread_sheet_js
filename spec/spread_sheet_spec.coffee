@@ -187,6 +187,14 @@ describe "SSView", =>
       @helper.setValue 1,1,'5'
       @helper.setValue 1,2,'=a1+B1'
       expect(@helper.getValue 1,2).toHaveText '8'
+    
+    it "changes when references change", ->
+      @helper.setValue 1,0,'3'
+      @helper.setValue 1,1,'5'
+      @helper.setValue 1,2,'=a1+B1'
+      expect(@helper.getValue 1,2).toHaveText '8'
+      @helper.setValue 1,0,'4'
+      expect(@helper.getValue 1,2).toHaveText '9'
       
     #TODO: testar valores como 010 (octal?)
   

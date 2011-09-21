@@ -171,11 +171,19 @@
         this.helper.setValue(1, 2, '  =  A1 + B1 ');
         return expect(this.helper.getValue(1, 2)).toHaveText('8');
       });
-      return it("ignores cases", function() {
+      it("ignores cases", function() {
         this.helper.setValue(1, 0, '3');
         this.helper.setValue(1, 1, '5');
         this.helper.setValue(1, 2, '=a1+B1');
         return expect(this.helper.getValue(1, 2)).toHaveText('8');
+      });
+      return it("changes when references change", function() {
+        this.helper.setValue(1, 0, '3');
+        this.helper.setValue(1, 1, '5');
+        this.helper.setValue(1, 2, '=a1+B1');
+        expect(this.helper.getValue(1, 2)).toHaveText('8');
+        this.helper.setValue(1, 0, '4');
+        return expect(this.helper.getValue(1, 2)).toHaveText('9');
       });
     }, this));
   }, this));

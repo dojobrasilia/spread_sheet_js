@@ -16,8 +16,17 @@ class window.CellModel extends Backbone.Model
     
     changed: =>
       if match= @get('value').match(@formula)
-        a = parseInt(@get('ssview').models[match[1].toUpperCase()].get('value'))
-        b = parseInt(@get('ssview').models[match[3].toUpperCase()].get('value'))
+        ma = @get('ssview').models[match[1].toUpperCase()]
+        a = parseInt(ma.get('value'))
+        mb = @get('ssview').models[match[3].toUpperCase()]
+        b = parseInt(mb.get('value'))
+        
+        #TODO como/se testa isso?
+        ma.unbind('change', @changed)
+        mb.unbind('change', @changed)
+        
+        ma.bind('change', @changed)
+        mb.bind('change', @changed)
         
         if match[2] == '+'
           @set(text: a+b)
