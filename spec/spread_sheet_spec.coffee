@@ -2,7 +2,7 @@ class window.TestHelper
   
   constructor: (@v)->
 
-  changeValue: (row,col, val)->
+  setValue: (row,col, val)->
     @v.$('table tr:eq('+row+') td:eq('+col+') span').click()
     @v.$('table tr:eq('+row+') td:eq('+col+') input').val(val).blur()
 
@@ -114,37 +114,39 @@ describe "SSView", =>
   it "has reference cell", ->
     v = new SSView(3,3)
     v.render()
-    v.$('table tr:eq(1) td:first span').click()
-    v.$('table tr:eq(1) td:first input').val('7').blur()
-    v.$('table tr:eq(1) td:eq(1) span').click()
-    v.$('table tr:eq(1) td:eq(1) input').val('=A1').blur()
-    expect(v.$('table tr:eq(1) td:eq(1) span')).toHaveText('7')
+    
+    helper = new TestHelper(v)
+    
+    helper.setValue(1,0,'7')
+    helper.setValue(1,1,'=A1')
+    
+    expect(helper.getValue(1,1)).toHaveText('7')
     
   it "changes when the referenced value changes", ->
     v = new SSView(3,3)
     v.render()
-    v.$('table tr:eq(1) td:first span').click()
-    v.$('table tr:eq(1) td:first input').val('7').blur()
-    v.$('table tr:eq(1) td:eq(1) span').click()
-    v.$('table tr:eq(1) td:eq(1) input').val('=A1').blur()
-
+    
+    helper = new TestHelper(v)
+    
+    helper.setValue(1,0,'7')
+    helper.setValue(1,1,'=A1')
+    
     v.$('table tr:eq(1) td:eq(1) span').click()
     expect(v.$('table tr:eq(1) td:eq(1) input')).toHaveValue('=A1')
     v.$('table tr:eq(1) td:eq(1) input').blur()
     
-    v.$('table tr:eq(1) td:first span').click()
-    v.$('table tr:eq(1) td:first input').val('8').blur()
+    helper.setValue(1,0,'8')
     
-    expect(v.$('table tr:eq(1) td:eq(1) span')).toHaveText('8')
+    expect(helper.getValue(1,1)).toHaveText('8')
 
   it "sums two cells", =>
     v = new SSView(1,3)
     v.render()
     
     helper = new TestHelper(v)
-    helper.changeValue(1,0,'7')
-    helper.changeValue(1,1,'8')
-    helper.changeValue(1,2,'=A1+B1')
+    helper.setValue(1,0,'7')
+    helper.setValue(1,1,'8')
+    helper.setValue(1,2,'=A1+B1')
 
     expect(helper.getValue(1,2)).toHaveText('15')
       

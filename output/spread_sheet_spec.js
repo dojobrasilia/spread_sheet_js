@@ -4,7 +4,7 @@
     function TestHelper(v) {
       this.v = v;
     }
-    TestHelper.prototype.changeValue = function(row, col, val) {
+    TestHelper.prototype.setValue = function(row, col, val) {
       this.v.$('table tr:eq(' + row + ') td:eq(' + col + ') span').click();
       return this.v.$('table tr:eq(' + row + ') td:eq(' + col + ') input').val(val).blur();
     };
@@ -107,38 +107,35 @@
       return expect(v.$('table tr:eq(3) th:first')).toHaveText('3');
     });
     it("has reference cell", function() {
-      var v;
+      var helper, v;
       v = new SSView(3, 3);
       v.render();
-      v.$('table tr:eq(1) td:first span').click();
-      v.$('table tr:eq(1) td:first input').val('7').blur();
-      v.$('table tr:eq(1) td:eq(1) span').click();
-      v.$('table tr:eq(1) td:eq(1) input').val('=A1').blur();
-      return expect(v.$('table tr:eq(1) td:eq(1) span')).toHaveText('7');
+      helper = new TestHelper(v);
+      helper.setValue(1, 0, '7');
+      helper.setValue(1, 1, '=A1');
+      return expect(helper.getValue(1, 1)).toHaveText('7');
     });
     it("changes when the referenced value changes", function() {
-      var v;
+      var helper, v;
       v = new SSView(3, 3);
       v.render();
-      v.$('table tr:eq(1) td:first span').click();
-      v.$('table tr:eq(1) td:first input').val('7').blur();
-      v.$('table tr:eq(1) td:eq(1) span').click();
-      v.$('table tr:eq(1) td:eq(1) input').val('=A1').blur();
+      helper = new TestHelper(v);
+      helper.setValue(1, 0, '7');
+      helper.setValue(1, 1, '=A1');
       v.$('table tr:eq(1) td:eq(1) span').click();
       expect(v.$('table tr:eq(1) td:eq(1) input')).toHaveValue('=A1');
       v.$('table tr:eq(1) td:eq(1) input').blur();
-      v.$('table tr:eq(1) td:first span').click();
-      v.$('table tr:eq(1) td:first input').val('8').blur();
-      return expect(v.$('table tr:eq(1) td:eq(1) span')).toHaveText('8');
+      helper.setValue(1, 0, '8');
+      return expect(helper.getValue(1, 1)).toHaveText('8');
     });
     return it("sums two cells", __bind(function() {
       var helper, v;
       v = new SSView(1, 3);
       v.render();
       helper = new TestHelper(v);
-      helper.changeValue(1, 0, '7');
-      helper.changeValue(1, 1, '8');
-      helper.changeValue(1, 2, '=A1+B1');
+      helper.setValue(1, 0, '7');
+      helper.setValue(1, 1, '8');
+      helper.setValue(1, 2, '=A1+B1');
       return expect(helper.getValue(1, 2)).toHaveText('15');
     }, this));
   }, this));
