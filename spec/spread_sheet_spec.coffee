@@ -197,5 +197,9 @@ describe "SSView", =>
       expect(@helper.getValue 1,2).toHaveText '9'
       
     #TODO: testar valores como 010 (octal?)
+    #TODO: Formula de formulas
+    #TODO: Completar fórmula clicando
+    #TODO: Sair da célula com enter
+    #TODO: Fórmula com célula e literal
   
     
