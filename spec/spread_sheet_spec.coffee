@@ -2,8 +2,12 @@ class window.TestHelper
   
   constructor: (@v)->
 
-  clickOnCell: (row,col)->
+  changeValue: (row,col, val)->
     @v.$('table tr:eq('+row+') td:eq('+col+') span').click()
+    @v.$('table tr:eq('+row+') td:eq('+col+') input').val(val).blur()
+
+  getValue: (row, col)->
+    return @v.$('table tr:eq('+row+') td:eq('+col+') span')
 
 describe "CellModel", ->
     it "has default value", ->
@@ -138,14 +142,9 @@ describe "SSView", =>
     v.render()
     
     helper = new TestHelper(v)
-    helper.clickOnCell(1,0)
-    
-    #v.$('table tr:eq(1) td:eq(0) span').click()
-    v.$('table tr:eq(1) td:eq(0) input').val('7').blur()
-    v.$('table tr:eq(1) td:eq(1) span').click()
-    v.$('table tr:eq(1) td:eq(1) input').val('8').blur()
-    v.$('table tr:eq(1) td:eq(2) span').click()
-    v.$('table tr:eq(1) td:eq(2) input').val('=A1+B1').blur()
-    
-    expect(v.$('table tr:eq(1) td:eq(2) span')).toHaveText('15')
+    helper.changeValue(1,0,'7')
+    helper.changeValue(1,1,'8')
+    helper.changeValue(1,2,'=A1+B1')
+
+    expect(helper.getValue(1,2)).toHaveText('15')
       

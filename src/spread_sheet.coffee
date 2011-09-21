@@ -9,7 +9,9 @@ class window.CellModel extends Backbone.Model
     
     changed: =>
       if(@get('value')=='=A1+B1')
-        @set(text: 15)
+        a1 = parseInt(@get('ssview').models['A1'].get('value'))
+        b1 = parseInt(@get('ssview').models['B1'].get('value'))
+        @set(text: a1+b1)
         
       else if(@get('value')[0]=='=')
         m= @get('ssview').models[@get('value').substring(1)]

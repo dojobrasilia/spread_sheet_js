@@ -22,10 +22,12 @@
       return this.changed();
     };
     CellModel.prototype.changed = function() {
-      var m;
+      var a1, b1, m;
       if (this.get('value') === '=A1+B1') {
+        a1 = parseInt(this.get('ssview').models['A1'].get('value'));
+        b1 = parseInt(this.get('ssview').models['B1'].get('value'));
         return this.set({
-          text: 15
+          text: a1 + b1
         });
       } else if (this.get('value')[0] === '=') {
         m = this.get('ssview').models[this.get('value').substring(1)];
