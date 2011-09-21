@@ -8,7 +8,14 @@ class window.CellModel extends Backbone.Model
       @changed()
     
     changed: =>
-      if match= @get('value').match(/=(..)\+(..)/)
+      formula= ///
+        \s* \= \s*   # =
+        (\w \d+) \s* # coordinate (ex: A1)
+        \+ \s*       # +
+        (\w \d+) \s* # coordinate (ex: A1)
+        ///
+      
+      if match= @get('value').match(formula)
         a = parseInt(@get('ssview').models[match[1]].get('value'))
         b = parseInt(@get('ssview').models[match[2]].get('value'))
         @set(text: a+b)

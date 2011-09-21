@@ -42,7 +42,7 @@ describe "CellModel", ->
 describe "CellView", ->
 
 	beforeEach ->
-        @cell = new CellModel({value:3})
+        @cell = new CellModel({value:'3'})
         @cellView = new CellView(model : @cell)
         @cellView.render()
 
@@ -51,14 +51,14 @@ describe "CellView", ->
         expect($(@cellView.el)).toHaveText('3')
     
     it "renders a div with a different content", ->
-        cell = new CellModel({value:5})
+        cell = new CellModel({value:'5'})
         cellView = new CellView(model: cell)
         cellView.render()
         expect($(cellView.el)).toBe('div')
         expect($(cellView.el)).toHaveText('5')
         
     it "updates when model changes", ->
-        @cell.set value: 5
+        @cell.set value: '5'
         expect($(@cellView.el)).toHaveText('5')
     
     it 'changes into a textfield when is clicked', ->
@@ -139,20 +139,31 @@ describe "SSView", =>
     
     expect(helper.getValue(1,1)).toHaveText('8')
 
-  it "sums two cells", =>
-    v = new SSView(3,3)
-    v.render()
+  describe "when summing two cells", =>
+    beforeEach ->
+      v = new SSView(11,3)
+      v.render()
+      @helper = new TestHelper(v)
     
-    helper = new TestHelper(v)
-    
-    helper.setValue(1,0,'7')
-    helper.setValue(1,1,'8')
-    helper.setValue(1,2,'=A1+B1')
+    it "with simple formula", ->
+      @helper.setValue(1,0,'7')
+      @helper.setValue(1,1,'8')
+      @helper.setValue(1,2,'=A1+B1')
+      expect(@helper.getValue(1,2)).toHaveText('15')
 
-    helper.setValue 2,0,'3'
-    helper.setValue 2,1,'5'
-    helper.setValue 2,2,'=A2+B2'
+    it "with long coordinates", ->
+      @helper.setValue 10,0,'3'
+      @helper.setValue 10,1,'5'
+      @helper.setValue 10,2,'=A10+B10'
+      expect(@helper.getValue 10,2).toHaveText '8'
     
-    expect(helper.getValue(1,2)).toHaveText('15')
-    expect(helper.getValue 2,2).toHaveText '8'
-    
+    it "with spaces", ->
+      @helper.setValue 1,0,'3'
+      @helper.setValue 1,1,'5'
+      @helper.setValue 1,2,'  =  A1 + B1 '
+      expect(@helper.getValue 1,2).toHaveText '8'
+      
+  # só maiúsculas
+  
+  
+  

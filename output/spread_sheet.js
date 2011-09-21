@@ -22,18 +22,13 @@
       return this.changed();
     };
     CellModel.prototype.changed = function() {
-      var a1, a2, b1, b2, m;
-      if (this.get('value') === '=A1+B1') {
-        a1 = parseInt(this.get('ssview').models['A1'].get('value'));
-        b1 = parseInt(this.get('ssview').models['B1'].get('value'));
+      var a, b, formula, m, match;
+      formula = /\s*\=\s*(\w\d+)\s*\+\s*(\w\d+)\s*/;
+      if (match = this.get('value').match(formula)) {
+        a = parseInt(this.get('ssview').models[match[1]].get('value'));
+        b = parseInt(this.get('ssview').models[match[2]].get('value'));
         return this.set({
-          text: a1 + b1
-        });
-      } else if (this.get('value') === '=A2+B2') {
-        a2 = parseInt(this.get('ssview').models['A2'].get('value'));
-        b2 = parseInt(this.get('ssview').models['B2'].get('value'));
-        return this.set({
-          text: a2 + b2
+          text: a + b
         });
       } else if (this.get('value')[0] === '=') {
         m = this.get('ssview').models[this.get('value').substring(1)];

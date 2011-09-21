@@ -23,7 +23,7 @@
   describe("CellView", function() {
     beforeEach(function() {
       this.cell = new CellModel({
-        value: 3
+        value: '3'
       });
       this.cellView = new CellView({
         model: this.cell
@@ -37,7 +37,7 @@
     it("renders a div with a different content", function() {
       var cell, cellView;
       cell = new CellModel({
-        value: 5
+        value: '5'
       });
       cellView = new CellView({
         model: cell
@@ -48,7 +48,7 @@
     });
     it("updates when model changes", function() {
       this.cell.set({
-        value: 5
+        value: '5'
       });
       return expect($(this.cellView.el)).toHaveText('5');
     });
@@ -128,19 +128,31 @@
       helper.setValue(1, 0, '8');
       return expect(helper.getValue(1, 1)).toHaveText('8');
     });
-    return it("sums two cells", __bind(function() {
-      var helper, v;
-      v = new SSView(3, 3);
-      v.render();
-      helper = new TestHelper(v);
-      helper.setValue(1, 0, '7');
-      helper.setValue(1, 1, '8');
-      helper.setValue(1, 2, '=A1+B1');
-      helper.setValue(2, 0, '3');
-      helper.setValue(2, 1, '5');
-      helper.setValue(2, 2, '=A2+B2');
-      expect(helper.getValue(1, 2)).toHaveText('15');
-      return expect(helper.getValue(2, 2)).toHaveText('8');
+    return describe("when summing two cells", __bind(function() {
+      beforeEach(function() {
+        var v;
+        v = new SSView(11, 3);
+        v.render();
+        return this.helper = new TestHelper(v);
+      });
+      it("with simple formula", function() {
+        this.helper.setValue(1, 0, '7');
+        this.helper.setValue(1, 1, '8');
+        this.helper.setValue(1, 2, '=A1+B1');
+        return expect(this.helper.getValue(1, 2)).toHaveText('15');
+      });
+      it("with long coordinates", function() {
+        this.helper.setValue(10, 0, '3');
+        this.helper.setValue(10, 1, '5');
+        this.helper.setValue(10, 2, '=A10+B10');
+        return expect(this.helper.getValue(10, 2)).toHaveText('8');
+      });
+      return it("with spaces", function() {
+        this.helper.setValue(1, 0, '3');
+        this.helper.setValue(1, 1, '5');
+        this.helper.setValue(1, 2, '  =  A1 + B1 ');
+        return expect(this.helper.getValue(1, 2)).toHaveText('8');
+      });
     }, this));
   }, this));
 }).call(this);
