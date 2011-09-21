@@ -140,13 +140,19 @@ describe "SSView", =>
     expect(helper.getValue(1,1)).toHaveText('8')
 
   it "sums two cells", =>
-    v = new SSView(1,3)
+    v = new SSView(3,3)
     v.render()
     
     helper = new TestHelper(v)
+    
     helper.setValue(1,0,'7')
     helper.setValue(1,1,'8')
     helper.setValue(1,2,'=A1+B1')
 
+    helper.setValue 2,0,'3'
+    helper.setValue 2,1,'5'
+    helper.setValue 2,2,'=A2+B2'
+    
     expect(helper.getValue(1,2)).toHaveText('15')
-      
+    expect(helper.getValue 2,2).toHaveText '8'
+    
