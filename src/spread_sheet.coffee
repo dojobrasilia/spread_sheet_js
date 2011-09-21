@@ -16,8 +16,8 @@ class window.CellModel extends Backbone.Model
         ///
       
       if match= @get('value').match(formula)
-        a = parseInt(@get('ssview').models[match[1]].get('value'))
-        b = parseInt(@get('ssview').models[match[2]].get('value'))
+        a = parseInt(@get('ssview').models[match[1].toUpperCase()].get('value'))
+        b = parseInt(@get('ssview').models[match[2].toUpperCase()].get('value'))
         @set(text: a+b)
         
       else if(@get('value')[0]=='=')

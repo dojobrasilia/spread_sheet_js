@@ -135,22 +135,28 @@
         v.render();
         return this.helper = new TestHelper(v);
       });
-      it("with simple formula", function() {
+      it("accepts simple formula", function() {
         this.helper.setValue(1, 0, '7');
         this.helper.setValue(1, 1, '8');
         this.helper.setValue(1, 2, '=A1+B1');
         return expect(this.helper.getValue(1, 2)).toHaveText('15');
       });
-      it("with long coordinates", function() {
+      it("accepts long coordinates", function() {
         this.helper.setValue(10, 0, '3');
         this.helper.setValue(10, 1, '5');
         this.helper.setValue(10, 2, '=A10+B10');
         return expect(this.helper.getValue(10, 2)).toHaveText('8');
       });
-      return it("with spaces", function() {
+      it("ignores spaces", function() {
         this.helper.setValue(1, 0, '3');
         this.helper.setValue(1, 1, '5');
         this.helper.setValue(1, 2, '  =  A1 + B1 ');
+        return expect(this.helper.getValue(1, 2)).toHaveText('8');
+      });
+      return it("ignores cases", function() {
+        this.helper.setValue(1, 0, '3');
+        this.helper.setValue(1, 1, '5');
+        this.helper.setValue(1, 2, '=a1+B1');
         return expect(this.helper.getValue(1, 2)).toHaveText('8');
       });
     }, this));

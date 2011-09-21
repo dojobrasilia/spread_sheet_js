@@ -25,8 +25,8 @@
       var a, b, formula, m, match;
       formula = /\s*\=\s*(\w\d+)\s*\+\s*(\w\d+)\s*/;
       if (match = this.get('value').match(formula)) {
-        a = parseInt(this.get('ssview').models[match[1]].get('value'));
-        b = parseInt(this.get('ssview').models[match[2]].get('value'));
+        a = parseInt(this.get('ssview').models[match[1].toUpperCase()].get('value'));
+        b = parseInt(this.get('ssview').models[match[2].toUpperCase()].get('value'));
         return this.set({
           text: a + b
         });

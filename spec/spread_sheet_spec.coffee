@@ -145,25 +145,28 @@ describe "SSView", =>
       v.render()
       @helper = new TestHelper(v)
     
-    it "with simple formula", ->
+    it "accepts simple formula", ->
       @helper.setValue(1,0,'7')
       @helper.setValue(1,1,'8')
       @helper.setValue(1,2,'=A1+B1')
       expect(@helper.getValue(1,2)).toHaveText('15')
 
-    it "with long coordinates", ->
+    it "accepts long coordinates", ->
       @helper.setValue 10,0,'3'
       @helper.setValue 10,1,'5'
       @helper.setValue 10,2,'=A10+B10'
       expect(@helper.getValue 10,2).toHaveText '8'
     
-    it "with spaces", ->
+    it "ignores spaces", ->
       @helper.setValue 1,0,'3'
       @helper.setValue 1,1,'5'
       @helper.setValue 1,2,'  =  A1 + B1 '
       expect(@helper.getValue 1,2).toHaveText '8'
-      
-  # só maiúsculas
-  
+    
+    it "ignores cases", ->
+      @helper.setValue 1,0,'3'
+      @helper.setValue 1,1,'5'
+      @helper.setValue 1,2,'=a1+B1'
+      expect(@helper.getValue 1,2).toHaveText '8'  
   
   
