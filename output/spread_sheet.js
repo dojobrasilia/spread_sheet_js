@@ -13,6 +13,7 @@
       this.changed = __bind(this.changed, this);
       CellModel.__super__.constructor.apply(this, arguments);
     }
+    CellModel.prototype.formula = /\s*\=\s*(\w\d+)\s*([*+-\/])\s*(\w\d+)\s*/;
     CellModel.prototype.defaults = {
       value: '',
       text: ''
@@ -22,14 +23,27 @@
       return this.changed();
     };
     CellModel.prototype.changed = function() {
-      var a, b, formula, m, match;
-      formula = /\s*\=\s*(\w\d+)\s*\+\s*(\w\d+)\s*/;
-      if (match = this.get('value').match(formula)) {
+      var a, b, m, match;
+      if (match = this.get('value').match(this.formula)) {
         a = parseInt(this.get('ssview').models[match[1].toUpperCase()].get('value'));
-        b = parseInt(this.get('ssview').models[match[2].toUpperCase()].get('value'));
-        return this.set({
-          text: a + b
-        });
+        b = parseInt(this.get('ssview').models[match[3].toUpperCase()].get('value'));
+        if (match[2] === '+') {
+          return this.set({
+            text: a + b
+          });
+        } else if (match[2] === '-') {
+          return this.set({
+            text: a - b
+          });
+        } else if (match[2] === '/') {
+          return this.set({
+            text: a / b
+          });
+        } else {
+          return this.set({
+            text: a * b
+          });
+        }
       } else if (this.get('value')[0] === '=') {
         m = this.get('ssview').models[this.get('value').substring(1)];
         m.unbind('change', this.changed);

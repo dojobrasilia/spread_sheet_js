@@ -1,4 +1,11 @@
 class window.CellModel extends Backbone.Model
+    formula: ///
+      \s* \= \s*   # =
+      (\w \d+) \s* # coordinate (ex: A1)
+      ([*+-/]) \s*       # +
+      (\w \d+) \s* # coordinate (ex: A1)
+      ///
+  
     defaults:
         value: ''
         text: ''
@@ -8,17 +15,18 @@ class window.CellModel extends Backbone.Model
       @changed()
     
     changed: =>
-      formula= ///
-        \s* \= \s*   # =
-        (\w \d+) \s* # coordinate (ex: A1)
-        \+ \s*       # +
-        (\w \d+) \s* # coordinate (ex: A1)
-        ///
-      
-      if match= @get('value').match(formula)
+      if match= @get('value').match(@formula)
         a = parseInt(@get('ssview').models[match[1].toUpperCase()].get('value'))
-        b = parseInt(@get('ssview').models[match[2].toUpperCase()].get('value'))
-        @set(text: a+b)
+        b = parseInt(@get('ssview').models[match[3].toUpperCase()].get('value'))
+        
+        if match[2] == '+'
+          @set(text: a+b)
+        else if match[2] == '-'
+          @set(text: a-b)
+        else if match[2] == '/'
+          @set(text: a/b)
+        else
+          @set(text: a*b)
         
       else if(@get('value')[0]=='=')
         m= @get('ssview').models[@get('value').substring(1)]

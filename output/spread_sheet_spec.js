@@ -128,18 +128,36 @@
       helper.setValue(1, 0, '8');
       return expect(helper.getValue(1, 1)).toHaveText('8');
     });
-    return describe("when summing two cells", __bind(function() {
+    return describe("binary formulas", __bind(function() {
       beforeEach(function() {
         var v;
         v = new SSView(11, 3);
         v.render();
         return this.helper = new TestHelper(v);
       });
-      it("accepts simple formula", function() {
+      it("accepts simple sum formula", function() {
         this.helper.setValue(1, 0, '7');
         this.helper.setValue(1, 1, '8');
         this.helper.setValue(1, 2, '=A1+B1');
         return expect(this.helper.getValue(1, 2)).toHaveText('15');
+      });
+      it("accepts simple subtraction formula", function() {
+        this.helper.setValue(1, 0, '7');
+        this.helper.setValue(1, 1, '8');
+        this.helper.setValue(1, 2, '=A1-B1');
+        return expect(this.helper.getValue(1, 2)).toHaveText('-1');
+      });
+      it("accepts simple multiplication formula", function() {
+        this.helper.setValue(1, 0, '7');
+        this.helper.setValue(1, 1, '8');
+        this.helper.setValue(1, 2, '=A1*B1');
+        return expect(this.helper.getValue(1, 2)).toHaveText('56');
+      });
+      it("accepts simple division formula", function() {
+        this.helper.setValue(1, 0, '8');
+        this.helper.setValue(1, 1, '2');
+        this.helper.setValue(1, 2, '=A1/B1');
+        return expect(this.helper.getValue(1, 2)).toHaveText('4');
       });
       it("accepts long coordinates", function() {
         this.helper.setValue(10, 0, '3');

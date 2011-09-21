@@ -139,17 +139,36 @@ describe "SSView", =>
     
     expect(helper.getValue(1,1)).toHaveText('8')
 
-  describe "when summing two cells", =>
+  describe "binary formulas", =>
+    
     beforeEach ->
       v = new SSView(11,3)
       v.render()
       @helper = new TestHelper(v)
     
-    it "accepts simple formula", ->
+    it "accepts simple sum formula", ->
       @helper.setValue(1,0,'7')
       @helper.setValue(1,1,'8')
       @helper.setValue(1,2,'=A1+B1')
       expect(@helper.getValue(1,2)).toHaveText('15')
+
+    it "accepts simple subtraction formula", ->
+      @helper.setValue(1,0,'7')
+      @helper.setValue(1,1,'8')
+      @helper.setValue(1,2,'=A1-B1')
+      expect(@helper.getValue(1,2)).toHaveText('-1')
+
+    it "accepts simple multiplication formula", ->
+      @helper.setValue(1,0,'7')
+      @helper.setValue(1,1,'8')
+      @helper.setValue(1,2,'=A1*B1')
+      expect(@helper.getValue(1,2)).toHaveText('56')
+
+    it "accepts simple division formula", ->
+      @helper.setValue(1,0,'8')
+      @helper.setValue(1,1,'2')
+      @helper.setValue(1,2,'=A1/B1')
+      expect(@helper.getValue(1,2)).toHaveText('4')
 
     it "accepts long coordinates", ->
       @helper.setValue 10,0,'3'
@@ -167,6 +186,8 @@ describe "SSView", =>
       @helper.setValue 1,0,'3'
       @helper.setValue 1,1,'5'
       @helper.setValue 1,2,'=a1+B1'
-      expect(@helper.getValue 1,2).toHaveText '8'  
+      expect(@helper.getValue 1,2).toHaveText '8'
+      
+    #TODO: testar valores como 010 (octal?)
   
-  
+    
