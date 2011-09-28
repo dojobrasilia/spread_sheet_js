@@ -61,9 +61,10 @@ describe "CellView", ->
         @cell.set value: '5'
         expect($(@cellView.el)).toHaveText('5')
     
-    it 'changes into a textfield when is clicked', ->
+    it 'hides span when clicked', ->
         $(@cellView.el).find("span").click()
-        expect($(@cellView.el)).toContain('input[type=text]')
+        expect(@cellView.$('span').css('display')).toBe('none')
+        expect(@cellView.$('input').css('display')).toBe('')
         
     it "when changes into a textfield it must be focused", ->
         focus= false
@@ -73,12 +74,13 @@ describe "CellView", ->
         
     it "keeps text inside text field", ->
         $(@cellView.el).find("span").click()
-        expect(@cellView.$('input[type=text]')).toHaveValue('3')
+        expect(@cellView.$('input')).toHaveValue('3')
         
-    it "changes input to div when blured", ->
+    it "hides input when blured", ->
         $(@cellView.el).find("span").click()
-        $(@cellView.el).find('input[type=text]').blur()
-        expect($(@cellView.el)).not.toContain('input[type=text]')
+        $(@cellView.el).find('input').blur()
+        expect(@cellView.$('input').css('display')).toBe('none')
+        expect(@cellView.$('span').css('display')).toBe('')
         expect($(@cellView.el)).toHaveText('3')
     
     it "saves edited value", ->
@@ -142,9 +144,9 @@ describe "SSView", =>
   describe "binary formulas", =>
     
     beforeEach ->
-      v = new SSView(11,3)
-      v.render()
-      @helper = new TestHelper(v)
+      @v = new SSView(11,3)
+      @v.render()
+      @helper = new TestHelper(@v)
     
     it "accepts simple sum formula", ->
       @helper.setValue(1,0,'7')
@@ -195,11 +197,22 @@ describe "SSView", =>
       expect(@helper.getValue 1,2).toHaveText '8'
       @helper.setValue 1,0,'4'
       expect(@helper.getValue 1,2).toHaveText '9'
+    
+    it "blurs when enter is pressed", ->
+      @v.$('table tr:eq(1) td:eq(1) span').click()
+      e = jQuery.Event("keydown")
+      e.keyCode = 13
+      @v.$('table tr:eq(1) td:eq(1) input').val('2').trigger(e)
+      expect(@helper.getValue 1,1).toHaveText '2' 
+    	
       
     #TODO: testar valores como 010 (octal?)
     #TODO: Formula de formulas
     #TODO: Completar fórmula clicando
-    #TODO: Sair da célula com enter
     #TODO: Fórmula com célula e literal
+    #TODO: Dá pala quando a gente altera uma célula referenciada por fórmulas pra string
+    #TODO: só igual da pau
+    #TODO: ignore case na formula de igualdade
+    #TODO: verificar se está acumulando eventos
   
     

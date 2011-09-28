@@ -52,9 +52,10 @@
       });
       return expect($(this.cellView.el)).toHaveText('5');
     });
-    it('changes into a textfield when is clicked', function() {
+    it('hides span when clicked', function() {
       $(this.cellView.el).find("span").click();
-      return expect($(this.cellView.el)).toContain('input[type=text]');
+      expect(this.cellView.$('span').css('display')).toBe('none');
+      return expect(this.cellView.$('input').css('display')).toBe('');
     });
     it("when changes into a textfield it must be focused", function() {
       var focus;
@@ -67,12 +68,13 @@
     });
     it("keeps text inside text field", function() {
       $(this.cellView.el).find("span").click();
-      return expect(this.cellView.$('input[type=text]')).toHaveValue('3');
+      return expect(this.cellView.$('input')).toHaveValue('3');
     });
-    it("changes input to div when blured", function() {
+    it("hides input when blured", function() {
       $(this.cellView.el).find("span").click();
-      $(this.cellView.el).find('input[type=text]').blur();
-      expect($(this.cellView.el)).not.toContain('input[type=text]');
+      $(this.cellView.el).find('input').blur();
+      expect(this.cellView.$('input').css('display')).toBe('none');
+      expect(this.cellView.$('span').css('display')).toBe('');
       return expect($(this.cellView.el)).toHaveText('3');
     });
     return it("saves edited value", function() {
@@ -130,10 +132,9 @@
     });
     return describe("binary formulas", __bind(function() {
       beforeEach(function() {
-        var v;
-        v = new SSView(11, 3);
-        v.render();
-        return this.helper = new TestHelper(v);
+        this.v = new SSView(11, 3);
+        this.v.render();
+        return this.helper = new TestHelper(this.v);
       });
       it("accepts simple sum formula", function() {
         this.helper.setValue(1, 0, '7');
@@ -177,13 +178,21 @@
         this.helper.setValue(1, 2, '=a1+B1');
         return expect(this.helper.getValue(1, 2)).toHaveText('8');
       });
-      return it("changes when references change", function() {
+      it("changes when references change", function() {
         this.helper.setValue(1, 0, '3');
         this.helper.setValue(1, 1, '5');
         this.helper.setValue(1, 2, '=a1+B1');
         expect(this.helper.getValue(1, 2)).toHaveText('8');
         this.helper.setValue(1, 0, '4');
         return expect(this.helper.getValue(1, 2)).toHaveText('9');
+      });
+      return it("blurs when enter is pressed", function() {
+        var e;
+        this.v.$('table tr:eq(1) td:eq(1) span').click();
+        e = jQuery.Event("keydown");
+        e.keyCode = 13;
+        this.v.$('table tr:eq(1) td:eq(1) input').val('2').trigger(e);
+        return expect(this.helper.getValue(1, 1)).toHaveText('2');
       });
     }, this));
   }, this));

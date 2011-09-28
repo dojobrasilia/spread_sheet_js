@@ -55,17 +55,27 @@ class window.CellView extends Backbone.View
     events:
         'click span' : 'edit'
         'blur input' : 'blur'
+        'keydown input' : 'keydown'
+        
 
     initialize: ->
         @model.bind('change', @render)
+        @span = $("<span/>")
+        $(@el).append(@span)
+        @input = $("<input type='text'>")
+        @input.hide()
+        $(@el).append(@input)
            
     render: =>
+        @input.val(@model.get('value'))
+        @span.text(@model.get('text'))
         if @mode == 'view'
-          $(@el).html("<span>#{@model.get('text')}</span>")
+          @input.hide()
+          @span.show()
         else
-          input = $("<input type='text' value=#{@model.get('value')}>")
-          $(@el).html(input)
-          input.focus()
+          @span.hide()
+          @input.show()
+          @input.focus()
         @
     
     edit: =>
@@ -76,7 +86,11 @@ class window.CellView extends Backbone.View
         @model.set( value: $(@el).find('input').val() )
         @mode= 'view'
         @render()
-
+        
+    keydown: (e) =>
+        @blur() if e.keyCode == 13
+        
+                    
 class window.SSView extends Backbone.View
     models: {}
     initialize: (rows, cols)=>

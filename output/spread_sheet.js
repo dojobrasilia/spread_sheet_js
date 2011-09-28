@@ -68,6 +68,7 @@
   window.CellView = (function() {
     __extends(CellView, Backbone.View);
     function CellView() {
+      this.keydown = __bind(this.keydown, this);
       this.blur = __bind(this.blur, this);
       this.edit = __bind(this.edit, this);
       this.render = __bind(this.render, this);
@@ -77,19 +78,27 @@
     CellView.prototype.mode = 'view';
     CellView.prototype.events = {
       'click span': 'edit',
-      'blur input': 'blur'
+      'blur input': 'blur',
+      'keydown input': 'keydown'
     };
     CellView.prototype.initialize = function() {
-      return this.model.bind('change', this.render);
+      this.model.bind('change', this.render);
+      this.span = $("<span/>");
+      $(this.el).append(this.span);
+      this.input = $("<input type='text'>");
+      this.input.hide();
+      return $(this.el).append(this.input);
     };
     CellView.prototype.render = function() {
-      var input;
+      this.input.val(this.model.get('value'));
+      this.span.text(this.model.get('text'));
       if (this.mode === 'view') {
-        $(this.el).html("<span>" + (this.model.get('text')) + "</span>");
+        this.input.hide();
+        this.span.show();
       } else {
-        input = $("<input type='text' value=" + (this.model.get('value')) + ">");
-        $(this.el).html(input);
-        input.focus();
+        this.span.hide();
+        this.input.show();
+        this.input.focus();
       }
       return this;
     };
@@ -103,6 +112,11 @@
       });
       this.mode = 'view';
       return this.render();
+    };
+    CellView.prototype.keydown = function(e) {
+      if (e.keyCode === 13) {
+        return this.blur();
+      }
     };
     return CellView;
   })();
