@@ -21,6 +21,9 @@ class window.CellModel extends Backbone.Model
         mb = @get('ssview').models[match[3].toUpperCase()]
         b = parseInt(mb.get('value'),10)
         
+        if (ma == undefined or mb == undefined)
+          @set(text: 'ERROR')        
+                
         #TODO como/se testa isso?
         ma.unbind('change', @changed)
         mb.unbind('change', @changed)
@@ -43,8 +46,15 @@ class window.CellModel extends Backbone.Model
         else
           @set(text: result)
       else if(@get('value')[0]=='=')
-        m= @get('ssview').models[@get('value').substring(1)]
+        m= @get('ssview').models[@get('value').substring(1).toUpperCase()]
         
+        if (@get('value').length == 1)
+          @set(text:'=')
+          return
+        else if (m == undefined)
+          @set(text:'ERROR')
+          return        
+                
         #TODO como/se testa isso?
         m.unbind('change', @changed)
         
