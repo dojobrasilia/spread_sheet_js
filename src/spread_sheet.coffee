@@ -28,15 +28,20 @@ class window.CellModel extends Backbone.Model
         ma.bind('change', @changed)
         mb.bind('change', @changed)
         
+        result = ''
         if match[2] == '+'
-          @set(text: a+b)
+          result = a+b
         else if match[2] == '-'
-          @set(text: a-b)
+          result = a-b
         else if match[2] == '/'
-          @set(text: a/b)
+          result = a/b
         else
-          @set(text: a*b)
-        
+          result = a*b
+
+        if (isNaN(result))
+          @set(text: 'ERROR')
+        else
+          @set(text: result)
       else if(@get('value')[0]=='=')
         m= @get('ssview').models[@get('value').substring(1)]
         

@@ -210,11 +210,15 @@ describe "SSView", =>
       @helper.setValue 1,1,'050'
       @helper.setValue 1,2,'=a1+B1'
       expect(@helper.getValue 1,2).toHaveText '60'
-  
+    
+    it "shows error message for mixing numbers and text in a formula", ->
+      @helper.setValue 1,0,'3'
+      @helper.setValue 1,1,'ABACATE'
+      @helper.setValue 1,2,'=a1+B1'
+      expect(@helper.getValue 1,2).toHaveText 'ERROR'
       
     #TODO: Formula de formulas
     #TODO: Completar fórmula clicando
-    #TODO: Fórmula com célula e literal
     #TODO: Dá pala quando a gente altera uma célula referenciada por fórmulas pra string
     #TODO: só igual da pau
     #TODO: ignore case na formula de igualdade
