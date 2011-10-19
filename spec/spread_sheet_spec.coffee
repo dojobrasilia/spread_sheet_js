@@ -204,9 +204,14 @@ describe "SSView", =>
       e.keyCode = 13
       @v.$('table tr:eq(1) td:eq(1) input').val('2').trigger(e)
       expect(@helper.getValue 1,1).toHaveText '2' 
-    	
+
+    it "always consider numbers as decimal", ->
+      @helper.setValue 1,0,'010'
+      @helper.setValue 1,1,'050'
+      @helper.setValue 1,2,'=a1+B1'
+      expect(@helper.getValue 1,2).toHaveText '60'
+  
       
-    #TODO: testar valores como 010 (octal?)
     #TODO: Formula de formulas
     #TODO: Completar fórmula clicando
     #TODO: Fórmula com célula e literal
@@ -214,5 +219,6 @@ describe "SSView", =>
     #TODO: só igual da pau
     #TODO: ignore case na formula de igualdade
     #TODO: verificar se está acumulando eventos
+    #TODO: resolver testes que funcionam só no chrome
   
     

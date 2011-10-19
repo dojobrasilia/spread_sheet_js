@@ -17,9 +17,9 @@ class window.CellModel extends Backbone.Model
     changed: =>
       if match= @get('value').match(@formula)
         ma = @get('ssview').models[match[1].toUpperCase()]
-        a = parseInt(ma.get('value'))
+        a = parseInt(ma.get('value'),10)
         mb = @get('ssview').models[match[3].toUpperCase()]
-        b = parseInt(mb.get('value'))
+        b = parseInt(mb.get('value'),10)
         
         #TODO como/se testa isso?
         ma.unbind('change', @changed)
